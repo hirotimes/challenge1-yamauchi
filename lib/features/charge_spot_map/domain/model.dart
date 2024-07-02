@@ -9,7 +9,6 @@ part 'model.g.dart';
 @freezed
 class ChargerSpot with _$ChargerSpot {
   const factory ChargerSpot({
-
     /// 充電スポットのUUID
     required String uuid,
 
@@ -24,55 +23,72 @@ class ChargerSpot with _$ChargerSpot {
 
     /// 充電器情報
     /// ※ カードの「充電器数」「充電出力」およびマーカーの充電器数の表示のために使用します
+    @JsonKey(name: 'charger_devices')
     required List<ChargerDevice> chargerDevices,
 
     /// サービス提供時間
     /// ※ カードの「営業中/営業時間外」で使用します
-    required List<ServiceTime> serviceTimes,
+    @JsonKey(name: 'service_times') required List<ServiceTime> serviceTimes,
 
     /// 充電スポットの写真URL
     /// ※ カードカードのサムネイル表示に使用します
     String? imageUrl,
-
   }) = _ChargerSpot;
 
-  factory ChargerSpot.fromJson(Map<String, dynamic> json) => _$ChargerSpotFromJson(json);
+  factory ChargerSpot.fromJson(Map<String, dynamic> json) =>
+      _$ChargerSpotFromJson(json);
 }
 
 /// 充電器情報
 @freezed
 class ChargerDevice with _$ChargerDevice {
   const factory ChargerDevice({
-
     /// 充電器のUUID
     required String uuid,
 
     /// 充電器の出力(kW)
     required num power,
-
   }) = _ChargerDevice;
 
-  factory ChargerDevice.fromJson(Map<String, dynamic> json) => _$ChargerDeviceFromJson(json);
+  factory ChargerDevice.fromJson(Map<String, dynamic> json) =>
+      _$ChargerDeviceFromJson(json);
 }
 
 /// サービス提供時間
 @freezed
-class ServiceTime with _$ServiceTime {
-  const factory ServiceTime({
+class ServiceTime with _$ServiceTime implements _$ServiceTime {
+  const ServiceTime._();
 
+  const factory ServiceTime({
     /// 開始時刻（hh:mm形式）
-    String? startTime,
+    @JsonKey(name: 'start_time') String? startTime,
 
     /// 終了時刻（hh:mm形式）
-    String? endTime,
+    @JsonKey(name: 'end_time') String? endTime,
 
     /// 営業日かどうか（true: 営業日、false: 休業日、null: 不明）
-    required bool businessDay,
+    @JsonKey(name: 'business_day') required bool businessDay,
 
     /// 曜日
     required ServiceTimeDay day,
   }) = _ServiceTime;
 
-  factory ServiceTime.fromJson(Map<String, dynamic> json) => _$ServiceTimeFromJson(json);
-}
+  factory ServiceTime.fromJson(Map<String, dynamic> json) =>
+      _$ServiceTimeFromJson(json);
 
+  bool isBusinessHours(DateTime now) {
+    if (!businessDay) return false;
+    final int nowInMinutes = now.hour * 60 + now.minute;
+    final int startInMinutes = startTime == null
+        ? 0
+        : int.parse(startTime!.split(':')[0]) * 60 +
+            int.parse(startTime!.split(':')[1]);
+    final int endInMinutes = endTime == null
+        ? 1440
+        : int.parse(endTime!.split(':')[0]) * 60 +
+            int.parse(endTime!.split(':')[1]);
+
+    return (now.weekday - 1 == day.index) &&
+        (nowInMinutes >= startInMinutes && nowInMinutes <= endInMinutes);
+  }
+}

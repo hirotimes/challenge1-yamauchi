@@ -12,10 +12,10 @@ _$ChargerSpotImpl _$$ChargerSpotImplFromJson(Map<String, dynamic> json) =>
       name: json['name'] as String,
       latitude: (json['latitude'] as num).toDouble(),
       longitude: (json['longitude'] as num).toDouble(),
-      chargerDevices: (json['chargerDevices'] as List<dynamic>)
+      chargerDevices: (json['charger_devices'] as List<dynamic>)
           .map((e) => ChargerDevice.fromJson(e as Map<String, dynamic>))
           .toList(),
-      serviceTimes: (json['serviceTimes'] as List<dynamic>)
+      serviceTimes: (json['service_times'] as List<dynamic>)
           .map((e) => ServiceTime.fromJson(e as Map<String, dynamic>))
           .toList(),
       imageUrl: json['imageUrl'] as String?,
@@ -27,8 +27,8 @@ Map<String, dynamic> _$$ChargerSpotImplToJson(_$ChargerSpotImpl instance) =>
       'name': instance.name,
       'latitude': instance.latitude,
       'longitude': instance.longitude,
-      'chargerDevices': instance.chargerDevices,
-      'serviceTimes': instance.serviceTimes,
+      'charger_devices': instance.chargerDevices,
+      'service_times': instance.serviceTimes,
       'imageUrl': instance.imageUrl,
     };
 
@@ -46,17 +46,17 @@ Map<String, dynamic> _$$ChargerDeviceImplToJson(_$ChargerDeviceImpl instance) =>
 
 _$ServiceTimeImpl _$$ServiceTimeImplFromJson(Map<String, dynamic> json) =>
     _$ServiceTimeImpl(
-      startTime: json['startTime'] as String?,
-      endTime: json['endTime'] as String?,
-      businessDay: json['businessDay'] as bool,
+      startTime: json['start_time'] as String?,
+      endTime: json['end_time'] as String?,
+      businessDay: json['business_day'] as bool,
       day: $enumDecode(_$ServiceTimeDayEnumMap, json['day']),
     );
 
 Map<String, dynamic> _$$ServiceTimeImplToJson(_$ServiceTimeImpl instance) =>
     <String, dynamic>{
-      'startTime': instance.startTime,
-      'endTime': instance.endTime,
-      'businessDay': instance.businessDay,
+      'start_time': instance.startTime,
+      'end_time': instance.endTime,
+      'business_day': instance.businessDay,
       'day': _$ServiceTimeDayEnumMap[instance.day]!,
     };
 

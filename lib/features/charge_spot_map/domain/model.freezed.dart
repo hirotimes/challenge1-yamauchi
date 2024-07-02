@@ -34,10 +34,12 @@ mixin _$ChargerSpot {
 
   /// 充電器情報
   /// ※ カードの「充電器数」「充電出力」およびマーカーの充電器数の表示のために使用します
+  @JsonKey(name: 'charger_devices')
   List<ChargerDevice> get chargerDevices => throw _privateConstructorUsedError;
 
   /// サービス提供時間
   /// ※ カードの「営業中/営業時間外」で使用します
+  @JsonKey(name: 'service_times')
   List<ServiceTime> get serviceTimes => throw _privateConstructorUsedError;
 
   /// 充電スポットの写真URL
@@ -61,8 +63,8 @@ abstract class $ChargerSpotCopyWith<$Res> {
       String name,
       double latitude,
       double longitude,
-      List<ChargerDevice> chargerDevices,
-      List<ServiceTime> serviceTimes,
+      @JsonKey(name: 'charger_devices') List<ChargerDevice> chargerDevices,
+      @JsonKey(name: 'service_times') List<ServiceTime> serviceTimes,
       String? imageUrl});
 }
 
@@ -133,8 +135,8 @@ abstract class _$$ChargerSpotImplCopyWith<$Res>
       String name,
       double latitude,
       double longitude,
-      List<ChargerDevice> chargerDevices,
-      List<ServiceTime> serviceTimes,
+      @JsonKey(name: 'charger_devices') List<ChargerDevice> chargerDevices,
+      @JsonKey(name: 'service_times') List<ServiceTime> serviceTimes,
       String? imageUrl});
 }
 
@@ -198,7 +200,9 @@ class _$ChargerSpotImpl implements _ChargerSpot {
       required this.name,
       required this.latitude,
       required this.longitude,
+      @JsonKey(name: 'charger_devices')
       required final List<ChargerDevice> chargerDevices,
+      @JsonKey(name: 'service_times')
       required final List<ServiceTime> serviceTimes,
       this.imageUrl})
       : _chargerDevices = chargerDevices,
@@ -230,6 +234,7 @@ class _$ChargerSpotImpl implements _ChargerSpot {
   /// 充電器情報
   /// ※ カードの「充電器数」「充電出力」およびマーカーの充電器数の表示のために使用します
   @override
+  @JsonKey(name: 'charger_devices')
   List<ChargerDevice> get chargerDevices {
     if (_chargerDevices is EqualUnmodifiableListView) return _chargerDevices;
     // ignore: implicit_dynamic_type
@@ -243,6 +248,7 @@ class _$ChargerSpotImpl implements _ChargerSpot {
   /// サービス提供時間
   /// ※ カードの「営業中/営業時間外」で使用します
   @override
+  @JsonKey(name: 'service_times')
   List<ServiceTime> get serviceTimes {
     if (_serviceTimes is EqualUnmodifiableListView) return _serviceTimes;
     // ignore: implicit_dynamic_type
@@ -310,7 +316,9 @@ abstract class _ChargerSpot implements ChargerSpot {
       required final String name,
       required final double latitude,
       required final double longitude,
+      @JsonKey(name: 'charger_devices')
       required final List<ChargerDevice> chargerDevices,
+      @JsonKey(name: 'service_times')
       required final List<ServiceTime> serviceTimes,
       final String? imageUrl}) = _$ChargerSpotImpl;
 
@@ -337,11 +345,13 @@ abstract class _ChargerSpot implements ChargerSpot {
 
   /// 充電器情報
   /// ※ カードの「充電器数」「充電出力」およびマーカーの充電器数の表示のために使用します
+  @JsonKey(name: 'charger_devices')
   List<ChargerDevice> get chargerDevices;
   @override
 
   /// サービス提供時間
   /// ※ カードの「営業中/営業時間外」で使用します
+  @JsonKey(name: 'service_times')
   List<ServiceTime> get serviceTimes;
   @override
 
@@ -525,12 +535,15 @@ ServiceTime _$ServiceTimeFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$ServiceTime {
   /// 開始時刻（hh:mm形式）
+  @JsonKey(name: 'start_time')
   String? get startTime => throw _privateConstructorUsedError;
 
   /// 終了時刻（hh:mm形式）
+  @JsonKey(name: 'end_time')
   String? get endTime => throw _privateConstructorUsedError;
 
   /// 営業日かどうか（true: 営業日、false: 休業日、null: 不明）
+  @JsonKey(name: 'business_day')
   bool get businessDay => throw _privateConstructorUsedError;
 
   /// 曜日
@@ -549,9 +562,9 @@ abstract class $ServiceTimeCopyWith<$Res> {
       _$ServiceTimeCopyWithImpl<$Res, ServiceTime>;
   @useResult
   $Res call(
-      {String? startTime,
-      String? endTime,
-      bool businessDay,
+      {@JsonKey(name: 'start_time') String? startTime,
+      @JsonKey(name: 'end_time') String? endTime,
+      @JsonKey(name: 'business_day') bool businessDay,
       ServiceTimeDay day});
 }
 
@@ -603,9 +616,9 @@ abstract class _$$ServiceTimeImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String? startTime,
-      String? endTime,
-      bool businessDay,
+      {@JsonKey(name: 'start_time') String? startTime,
+      @JsonKey(name: 'end_time') String? endTime,
+      @JsonKey(name: 'business_day') bool businessDay,
       ServiceTimeDay day});
 }
 
@@ -648,26 +661,30 @@ class __$$ServiceTimeImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$ServiceTimeImpl implements _ServiceTime {
+class _$ServiceTimeImpl extends _ServiceTime {
   const _$ServiceTimeImpl(
-      {this.startTime,
-      this.endTime,
-      required this.businessDay,
-      required this.day});
+      {@JsonKey(name: 'start_time') this.startTime,
+      @JsonKey(name: 'end_time') this.endTime,
+      @JsonKey(name: 'business_day') required this.businessDay,
+      required this.day})
+      : super._();
 
   factory _$ServiceTimeImpl.fromJson(Map<String, dynamic> json) =>
       _$$ServiceTimeImplFromJson(json);
 
   /// 開始時刻（hh:mm形式）
   @override
+  @JsonKey(name: 'start_time')
   final String? startTime;
 
   /// 終了時刻（hh:mm形式）
   @override
+  @JsonKey(name: 'end_time')
   final String? endTime;
 
   /// 営業日かどうか（true: 営業日、false: 休業日、null: 不明）
   @override
+  @JsonKey(name: 'business_day')
   final bool businessDay;
 
   /// 曜日
@@ -711,12 +728,13 @@ class _$ServiceTimeImpl implements _ServiceTime {
   }
 }
 
-abstract class _ServiceTime implements ServiceTime {
+abstract class _ServiceTime extends ServiceTime {
   const factory _ServiceTime(
-      {final String? startTime,
-      final String? endTime,
-      required final bool businessDay,
+      {@JsonKey(name: 'start_time') final String? startTime,
+      @JsonKey(name: 'end_time') final String? endTime,
+      @JsonKey(name: 'business_day') required final bool businessDay,
       required final ServiceTimeDay day}) = _$ServiceTimeImpl;
+  const _ServiceTime._() : super._();
 
   factory _ServiceTime.fromJson(Map<String, dynamic> json) =
       _$ServiceTimeImpl.fromJson;
@@ -724,14 +742,17 @@ abstract class _ServiceTime implements ServiceTime {
   @override
 
   /// 開始時刻（hh:mm形式）
+  @JsonKey(name: 'start_time')
   String? get startTime;
   @override
 
   /// 終了時刻（hh:mm形式）
+  @JsonKey(name: 'end_time')
   String? get endTime;
   @override
 
   /// 営業日かどうか（true: 営業日、false: 休業日、null: 不明）
+  @JsonKey(name: 'business_day')
   bool get businessDay;
   @override
 
