@@ -6,7 +6,6 @@ import 'package:flutter_map_app/constants/asset_path.dart';
 import 'package:flutter_map_app/constants/enums.dart';
 import 'package:flutter_map_app/features/charge_spot_map/data/dto.dart';
 import 'package:flutter_map_app/features/charge_spot_map/domain/model.dart';
-import 'package:logger/logger.dart';
 
 /// 充電スポット・リポジトリ
 class ChargerSpotsRepository {
@@ -23,13 +22,16 @@ class ChargerSpotsRepository {
     required double neLat,
     required double neLng,
   }) async {
+    // _spotsがnullの場合はjsonデータから充電スポットを読み込む
     final List<ChargerSpot> spots = _spots ??
-        (jsonDecode(await rootBundle.loadString('assets/spots.json')) as List)
+        (jsonDecode(await rootBundle.loadString(spotsJson)) as List)
             .map((e) => ChargerSpot.fromJson(e as Map<String, dynamic>))
             .toList();
 
+    // ランダムな遅延をシミュレート
     await Future.delayed(Duration(milliseconds: Random().nextInt(400)));
 
+    // 範囲内にある充電スポットをフィルタリング
     final spotsInRegion = spots
         .where((spot) =>
             spot.latitude >= swLat &&
@@ -38,6 +40,7 @@ class ChargerSpotsRepository {
             spot.longitude <= neLng)
         .toList();
 
+    // 充電スポットが100以上の場合、エラーステータスを返す
     return spotsInRegion.length > 100
         ? const GetChargerSpotsResponse(
             status: GetChargerSpotsStatus.ngTooManySpots,
