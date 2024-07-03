@@ -45,3 +45,6 @@ app.*.map.json
 
 secret.properties
 Environment.swift
+
+*.g.dart
+*.freezed.dart
