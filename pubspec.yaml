@@ -21,6 +21,7 @@ dependencies:
   flutter_spinkit: ^5.2.1
   logger: ^2.3.0
   collection: ^1.18.0
+  holiday_jp: ^0.0.8
 
 dev_dependencies:
   flutter_test:
