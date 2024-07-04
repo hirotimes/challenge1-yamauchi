@@ -156,23 +156,25 @@ class ServiceTime with _$ServiceTime implements _$ServiceTime {
     // 営業日かどうかをチェック
     if (!businessDay) return false;
 
-    // 現在時刻を分単位で計算
-    final int nowInMinutes = now.hour * 60 + now.minute;
+    // 開始時刻と終了時刻をDateTimeオブジェクトに変換
+    final DateTime start = startTime != null
+        ? DateTime(
+            now.year,
+            now.month,
+            now.day,
+            int.parse(startTime!.split(':')[0]),
+            int.parse(startTime!.split(':')[1]))
+        : DateTime(now.year, now.month, now.day, 0, 0);
+    final DateTime end = endTime != null
+        ? DateTime(
+            now.year,
+            now.month,
+            now.day,
+            int.parse(endTime!.split(':')[0]),
+            int.parse(endTime!.split(':')[1]))
+        : DateTime(now.year, now.month, now.day, 23, 59);
 
-    // 開始時刻を分単位で計算。開始時刻がnullの場合は0に設定
-    final int startInMinutes = startTime == null
-        ? 0
-        : int.parse(startTime!.split(':')[0]) * 60 +
-        int.parse(startTime!.split(':')[1]);
-
-    // 終了時刻を分単位で計算。終了時刻がnullの場合は1440(24:00)に設定
-    final int endInMinutes = endTime == null
-        ? 1440
-        : int.parse(endTime!.split(':')[0]) * 60 +
-        int.parse(endTime!.split(':')[1]);
-
-    // 今日が指定された曜日であり、現在時刻が開始時刻と終了時刻の間にあるかをチェック
-    return (now.weekday - 1 == day.index) &&
-        (nowInMinutes >= startInMinutes && nowInMinutes <= endInMinutes);
+    // 現在時刻が開始時刻と終了時刻の間にあるかをチェック
+    return now.isAfter(start) && now.isBefore(end);
   }
 }
