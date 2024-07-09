@@ -82,3 +82,16 @@ Flutterで充電スポットマップ画面を作成してください。
 
 #### 注意
 自身で取得したAPI Keyは<b>絶対に</b>コミットしないでください。
+
+
+### API Key 設定方法
+iOS・Android共に下記を参考に設定してください。
+https://zenn.dev/heyhey1028/books/flutter-firebase-handson/viewer/google_map9
+
+### ビルド
+初回のビルド時には事前に以下を実行してください。
+
+```
+flutter pub get
+dart run build_runner build --delete-conflicting-outputs
+```
